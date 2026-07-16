@@ -9,6 +9,16 @@ Séverine Hori Maitrehut
 
 """
 
+def print_plaques(choice):
+    """Fonction qui affiche les plaques à disposition du joueur"""
+    print("Plaques disponibles :")
+    print("+------+------+------+------+------+------+")
+    print("|", end="")
+    for nb in choice:
+        print(f" {nb:^4} |", end="")
+    print()
+    print("+------+------+------+------+------+------+")
+
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
 
@@ -38,6 +48,7 @@ def main_jeu():
     # TODO Tant que conditions de fin de sortie non atteintes: Faire
     print(f" Le nombre à obtenir est : {nb_to_get}")
     # TODO Appel de la fonction affichage des plaques (fonction à écrire)
+    print_plaques(choice)
 
     # TODO Saisie de l'utilisateur choix d'une opération (fonctions à écrire)
 
