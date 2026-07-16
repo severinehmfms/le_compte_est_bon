@@ -29,6 +29,7 @@ CONST_SYMBOLS = {
         CONST_DIVISION: "/"
     }
 
+
 def print_plaques(choice):
     """Fonction qui affiche les plaques à disposition du joueur"""
     print("Plaques disponibles :")
@@ -76,7 +77,7 @@ def is_card_choice_entry_ok(card_choice_input, choice):
     cleaned_card_choice_input = card_choice_input.strip()
     if not cleaned_card_choice_input.isdigit():
         return False
-    if (int(cleaned_card_choice_input) not in choice):
+    if int(cleaned_card_choice_input) not in choice:
         return False
     return True
 
@@ -110,12 +111,12 @@ def get_str_entry_user(prompt):
     return input_str
 
 
-
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
     print("****************************** Le compte est bon *************************************")
     # Tirage au sort du nombre à obtenir
     nb_to_get = random.randint(101, 999)
+    result = 0
 
     # On prépare les 24 plaques portant un nombre
     nb_to_choice = []
@@ -138,29 +139,61 @@ def main_jeu():
         print(f"********* Le nombre à obtenir est : {nb_to_get}")
         # Saisie de l'utilisateur choix d'une opération
         operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
-        #Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
-        card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
-        # Suppression de la plaque choisie de la liste des plaques
-        remove_plaque(choice, card_choice_1)
-        # Saisie de l'utilisateur du second chiffre parmi les plaques proposées
-        card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
-        # Suppression de la plaque choisie de la liste des plaques
-        remove_plaque(choice, card_choice_2)
+
+        if operator_choice != CONST_DIVISION:
+            # Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
+            card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+            # Suppression de la plaque choisie de la liste des plaques
+            remove_plaque(choice, card_choice_1)
+            # Saisie de l'utilisateur du second chiffre parmi les plaques proposées
+            card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+            # Suppression de la plaque choisie de la liste des plaques
+            remove_plaque(choice, card_choice_2)
+        else:
+            no_error = False
+            while not no_error:
+                # Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
+                card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+                # Suppression de la plaque choisie de la liste des plaques
+                remove_plaque(choice, card_choice_1)
+                # Saisie de l'utilisateur du second chiffre parmi les plaques proposées
+                card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+                # Suppression de la plaque choisie de la liste des plaques
+                remove_plaque(choice, card_choice_2)
+
+                if card_choice_2 == 0:
+                    print("Division par zéro impossible.")
+                    add_plaque(choice, card_choice_1)
+                    add_plaque(choice, card_choice_2)
+                    continue
+
+                if card_choice_1 % card_choice_2 != 0:
+                    print("La division doit avoir pour résultat un entier.")
+                    add_plaque(choice, card_choice_1)
+                    add_plaque(choice, card_choice_2)
+                    continue
+
+                # Si on arrive ici, tout est bon
+                no_error = True
+
+
         # Calcul demandé par l'utilisateur
         result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
+
+
         # On ajoute le résultat du calcul à la liste des plaques disponibles
         add_plaque(choice, result)
-        # print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
+        print(f"Le résultat de votre calcul est : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
 
         # Affichage des plaques
         print_plaques(choice)
 
-        if (len(choice) == 1):
+        if len(choice) == 1:
             end_of_game = True
             exit()
 
-        user_choice = get_str_entry_user("Si vous souhaitez continuer, touche Entrée, si vous souhaitez quitter, tapez Q : ")
-        if (user_choice == "Q"):
+        user_choice = get_str_entry_user("Pour continuer touche Entrée, pour quitter tapez Q : ")
+        if user_choice == "Q":
             end_of_game = True
             result = get_card_choice_input("Entrez le chiffre le plus proche atteint : ", choice)
 
