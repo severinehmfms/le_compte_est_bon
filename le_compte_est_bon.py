@@ -131,16 +131,19 @@ def main_jeu():
     # Tirage au sort des 6 plaques différentes (d'ou random.sample) parmi les 24
     choice = random.sample(nb_to_choice, 6)
 
-    end_of_game = False
-
     # Affichage des plaques
     print_plaques(choice)
+
+    end_of_game = False
     while not end_of_game:
         print(f"********* Le nombre à obtenir est : {nb_to_get}")
-        # Saisie de l'utilisateur choix d'une opération
-        operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
+        all_ok = False
 
-        if operator_choice != CONST_DIVISION:
+        # Tant qu'il n'y a pas d'erreur dans le calcul
+        while not all_ok:
+            # Saisie de l'utilisateur choix d'une opération
+            operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
+
             # Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
             card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
             # Suppression de la plaque choisie de la liste des plaques
@@ -149,41 +152,27 @@ def main_jeu():
             card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
             # Suppression de la plaque choisie de la liste des plaques
             remove_plaque(choice, card_choice_2)
-        else:
-            no_error = False
-            while not no_error:
-                # Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
-                card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
-                # Suppression de la plaque choisie de la liste des plaques
-                remove_plaque(choice, card_choice_1)
-                # Saisie de l'utilisateur du second chiffre parmi les plaques proposées
-                card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
-                # Suppression de la plaque choisie de la liste des plaques
-                remove_plaque(choice, card_choice_2)
 
-                if card_choice_2 == 0:
-                    print("Division par zéro impossible.")
-                    add_plaque(choice, card_choice_1)
-                    add_plaque(choice, card_choice_2)
-                    continue
+            if operator_choice == CONST_SUBSTRACTION and card_choice_1 < card_choice_2:
+                print("La soustraction ne doit pas donner un résultat négatif.")
+                add_plaque(choice, card_choice_1)
+                add_plaque(choice, card_choice_2)
+                continue
 
-                if card_choice_1 % card_choice_2 != 0:
-                    print("La division doit avoir pour résultat un entier.")
-                    add_plaque(choice, card_choice_1)
-                    add_plaque(choice, card_choice_2)
-                    continue
+            if operator_choice==CONST_DIVISION and card_choice_1 % card_choice_2 != 0:
+                print("La division doit avoir pour résultat un entier.")
+                add_plaque(choice, card_choice_1)
+                add_plaque(choice, card_choice_2)
+                continue
 
-                # Si on arrive ici, tout est bon
-                no_error = True
-
+            all_ok = True
 
         # Calcul demandé par l'utilisateur
         result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
 
-
         # On ajoute le résultat du calcul à la liste des plaques disponibles
         add_plaque(choice, result)
-        print(f"Le résultat de votre calcul est : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
+        print(f"Le résultat de votre calcul est : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {int(result)}")
 
         # Affichage des plaques
         print_plaques(choice)
