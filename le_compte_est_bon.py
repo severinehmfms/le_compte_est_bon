@@ -71,22 +71,20 @@ def get_int_input(prompt, min_int, max_int):
     return int(input_int)
 
 
-def is_card_choice_entry_ok(card_choice_input, min_int, max_int, choice):
+def is_card_choice_entry_ok(card_choice_input, choice):
     """ Fonction qui vérifie la saisie d'un numérique, entre min_int et max_int    """
     cleaned_card_choice_input = card_choice_input.strip()
     if not cleaned_card_choice_input.isdigit():
-        return False
-    if int(cleaned_card_choice_input) < min_int or int(cleaned_card_choice_input) > max_int:
         return False
     if (int(cleaned_card_choice_input) not in choice):
         return False
     return True
 
 
-def get_card_choice_input(prompt, min_int, max_int, choice):
+def get_card_choice_input(prompt, choice):
     """Fonction qui demande au joueur de saisir le nombre correspondant à la plaque choisie"""
     card_choice_input = input(prompt)
-    while not is_card_choice_entry_ok(card_choice_input, min_int, max_int, choice):
+    while not is_card_choice_entry_ok(card_choice_input, choice):
         card_choice_input = input("Saisie incorrecte. Merci de recommencer : ")
     return int(card_choice_input)
 
@@ -120,10 +118,10 @@ def main_jeu():
         # Saisie de l'utilisateur choix d'une opération
         operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
         #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
-        card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+        card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
         remove_plaque(choice, card_choice_1)
         #print_plaques(choice)
-        card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+        card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
         remove_plaque(choice, card_choice_2)
         #print_plaques(choice)
 
