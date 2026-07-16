@@ -8,6 +8,10 @@ Le compte est bon
 Séverine Hori Maitrehut
 
 """
+CONST_ADDITION = 1
+CONST_SUBSTRACTION = 2
+CONST_MULTIPLICATION = 3
+CONST_DIVISION = 4
 
 def print_plaques(choice):
     """Fonction qui affiche les plaques à disposition du joueur"""
@@ -66,9 +70,8 @@ def main_jeu():
     # Appel de la fonction affichage des plaques
     print_plaques(choice)
 
-    # TODO Saisie de l'utilisateur choix d'une opération (fonctions à écrire)
-
-
+    # Saisie de l'utilisateur choix d'une opération
+    operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
 
     # TODO Saisie de l'utilisateur choix des nombres parmi les plaques (fonctions à écrire)
 
