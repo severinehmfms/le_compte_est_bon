@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import random
+import operator
+
 
 """
 Le compte est bon
@@ -12,6 +14,13 @@ CONST_ADDITION = 1
 CONST_SUBSTRACTION = 2
 CONST_MULTIPLICATION = 3
 CONST_DIVISION = 4
+
+CONST_SYMBOLS = {
+        CONST_ADDITION: "+",
+        CONST_SUBSTRACTION: "-",
+        CONST_MULTIPLICATION: "*",
+        CONST_DIVISION: "/"
+    }
 
 def print_plaques(choice):
     """Fonction qui affiche les plaques à disposition du joueur"""
@@ -103,17 +112,27 @@ def main_jeu():
 
     # Saisie de l'utilisateur choix d'une opération
     operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
-
+    operator_choice = int(operator_choice)
     #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
     card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+    card_choice_1 = int(card_choice_1)
     remove_plaque(choice, card_choice_1)
     print_plaques(choice)
     card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+    card_choice_2 = int(card_choice_2)
     remove_plaque(choice, card_choice_2)
     print_plaques(choice)
 
-    # TODO Calcul demandé par l'utilisateur
-
+    #Calcul demandé par l'utilisateur
+    operators = {
+        CONST_ADDITION: operator.add,
+        CONST_SUBSTRACTION: operator.sub,
+        CONST_MULTIPLICATION: operator.mul,
+        CONST_DIVISION: operator.truediv
+    }
+    result = operators[int(operator_choice)](card_choice_1, card_choice_2)
+    add_plaque(choice, result)
+    print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
 
     # TODO Si sortie de boucle, afficher le dernier nombre atteint
 
