@@ -93,6 +93,7 @@ def main_jeu():
 
     #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
     card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+    card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
 
     # TODO Calcul demandé par l'utilisateur
 
