@@ -89,6 +89,28 @@ def get_card_choice_input(prompt, choice):
     return int(card_choice_input)
 
 
+def is_entry_user_ok(saisie):
+    """ Fonction qui vérifie la saisie d'une chaine, Soit touche entrée, soit Q   """
+    cleaned_saisie = saisie.strip()
+    # Si l'utilisateur a seulement tapé sur la touche entrée
+    if cleaned_saisie == "":
+        return True
+    if not cleaned_saisie.isalpha():
+        return False
+    if cleaned_saisie != "Q":
+        return False
+    return True
+
+
+def get_str_entry_user(prompt):
+    """Fonction qui demande au joueur d'appuyer sur la touche Entrée pour continuer, ou Q pour arrêter la partie"""
+    input_str = input(prompt)
+    while not is_entry_user_ok(input_str):
+        input_str = input("Saisie incorrecte. Merci de recommencer : ")
+    return input_str
+
+
+
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
     print("****************************** Le compte est bon *************************************")
@@ -109,11 +131,11 @@ def main_jeu():
     choice = random.sample(nb_to_choice, 6)
 
     end_of_game = False
+
+    # Affichage des plaques
+    print_plaques(choice)
     while not end_of_game:
         print(f"********* Le nombre à obtenir est : {nb_to_get}")
-        # Affichage des plaques
-        print_plaques(choice)
-
         # Saisie de l'utilisateur choix d'une opération
         operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
         #Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
@@ -129,6 +151,10 @@ def main_jeu():
         # On ajoute le résultat du calcul à la liste des plaques disponibles
         add_plaque(choice, result)
         # print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
+
+        # Affichage des plaques
+        print_plaques(choice)
+        user_choice = get_str_entry_user("Si vous souhaitez continuer, touche Entrée, si vous souhaitez quitter, tapez Q : ")
 
 
         if (len(choice) == 1):
