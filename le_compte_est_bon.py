@@ -19,6 +19,17 @@ def print_plaques(choice):
     print()
     print("+------+------+------+------+------+------+")
 
+
+def is_entry_int_ok(saisie, min_int, max_int):
+    """ Fonction qui vérifie la saisie d'un numérique, entre min_int et max_int    """
+    cleaned_saisie = saisie.strip()
+    if not cleaned_saisie.isdigit():
+        return False
+    if int(cleaned_saisie) < min_int or int(cleaned_saisie) > max_int:
+        return False
+    return True
+
+
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
     # Tirage au sort du nombre à obtenir
@@ -48,6 +59,8 @@ def main_jeu():
     print_plaques(choice)
 
     # TODO Saisie de l'utilisateur choix d'une opération (fonctions à écrire)
+
+
 
     # TODO Saisie de l'utilisateur choix des nombres parmi les plaques (fonctions à écrire)
 
