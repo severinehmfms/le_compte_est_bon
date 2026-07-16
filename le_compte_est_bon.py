@@ -15,6 +15,13 @@ CONST_SUBSTRACTION = 2
 CONST_MULTIPLICATION = 3
 CONST_DIVISION = 4
 
+CONSTS_OPERATORS = {
+    CONST_ADDITION: operator.add,
+    CONST_SUBSTRACTION: operator.sub,
+    CONST_MULTIPLICATION: operator.mul,
+    CONST_DIVISION: operator.truediv
+}
+
 CONST_SYMBOLS = {
         CONST_ADDITION: "+",
         CONST_SUBSTRACTION: "-",
@@ -81,7 +88,7 @@ def get_card_choice_input(prompt, min_int, max_int, choice):
     card_choice_input = input(prompt)
     while not is_card_choice_entry_ok(card_choice_input, min_int, max_int, choice):
         card_choice_input = input("Saisie incorrecte. Merci de recommencer : ")
-    return card_choice_input
+    return int(card_choice_input)
 
 
 def main_jeu():
@@ -114,22 +121,15 @@ def main_jeu():
     operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
     #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
     card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
-    card_choice_1 = int(card_choice_1)
     remove_plaque(choice, card_choice_1)
     print_plaques(choice)
     card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
-    card_choice_2 = int(card_choice_2)
     remove_plaque(choice, card_choice_2)
     print_plaques(choice)
 
     #Calcul demandé par l'utilisateur
-    operators = {
-        CONST_ADDITION: operator.add,
-        CONST_SUBSTRACTION: operator.sub,
-        CONST_MULTIPLICATION: operator.mul,
-        CONST_DIVISION: operator.truediv
-    }
-    result = operators[int(operator_choice)](card_choice_1, card_choice_2)
+
+    result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
     add_plaque(choice, result)
     print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
 
