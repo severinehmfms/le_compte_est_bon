@@ -154,14 +154,18 @@ def main_jeu():
 
         # Affichage des plaques
         print_plaques(choice)
-        user_choice = get_str_entry_user("Si vous souhaitez continuer, touche Entrée, si vous souhaitez quitter, tapez Q : ")
-
 
         if (len(choice) == 1):
             end_of_game = True
+            exit()
 
-    # TODO Si sortie de boucle, afficher le dernier nombre atteint
-    print(result)
+        user_choice = get_str_entry_user("Si vous souhaitez continuer, touche Entrée, si vous souhaitez quitter, tapez Q : ")
+        if (user_choice == "Q"):
+            end_of_game = True
+            result = get_card_choice_input("Entrez le chiffre le plus proche atteint : ", choice)
+
+    # Si sortie de boucle, afficher le dernier nombre atteint
+    print(f"Vous avez atteint le nombre {result}, il fallait atteindre le nombre {nb_to_get}")
 
 
 if __name__ == '__main__':
