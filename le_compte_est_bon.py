@@ -91,6 +91,7 @@ def get_card_choice_input(prompt, choice):
 
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
+    print("****************************** Le compte est bon *************************************")
     # Tirage au sort du nombre à obtenir
     nb_to_get = random.randint(101, 999)
 
@@ -107,34 +108,34 @@ def main_jeu():
     # Tirage au sort des 6 plaques différentes (d'ou random.sample) parmi les 24
     choice = random.sample(nb_to_choice, 6)
 
-    # TODO Tant que conditions de fin de sortie non atteintes: Faire
     end_of_game = False
-
     while not end_of_game:
-        print(f" Le nombre à obtenir est : {nb_to_get}")
+        print(f"********* Le nombre à obtenir est : {nb_to_get}")
         # Affichage des plaques
         print_plaques(choice)
 
         # Saisie de l'utilisateur choix d'une opération
         operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
-        #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
+        #Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
         card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+        # Suppression de la plaque choisie de la liste des plaques
         remove_plaque(choice, card_choice_1)
-        #print_plaques(choice)
+        # Saisie de l'utilisateur du second chiffre parmi les plaques proposées
         card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
+        # Suppression de la plaque choisie de la liste des plaques
         remove_plaque(choice, card_choice_2)
-        #print_plaques(choice)
-
-        #Calcul demandé par l'utilisateur
+        # Calcul demandé par l'utilisateur
         result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
+        # On ajoute le résultat du calcul à la liste des plaques disponibles
         add_plaque(choice, result)
-        print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
+        # print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
 
-        if (len(choice) == 0):
+
+        if (len(choice) == 1):
             end_of_game = True
 
     # TODO Si sortie de boucle, afficher le dernier nombre atteint
-
+    print(result)
 
 
 if __name__ == '__main__':
