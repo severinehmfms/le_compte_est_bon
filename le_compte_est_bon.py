@@ -30,6 +30,14 @@ def is_entry_int_ok(saisie, min_int, max_int):
     return True
 
 
+def get_int_input(prompt, min_int, max_int):
+    """Fonction qui demande au joueur de saisir un int"""
+    input_int = input(prompt)
+    while not is_entry_int_ok(input_int, min_int, max_int):
+        input_int = input("Saisie incorrecte. Merci de recommencer : ")
+    return input_int
+
+
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
     # Tirage au sort du nombre à obtenir
