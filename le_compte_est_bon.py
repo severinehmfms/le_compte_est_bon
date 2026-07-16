@@ -21,7 +21,6 @@ def print_plaques(choice):
 
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
-
     # Tirage au sort du nombre à obtenir
     nb_to_get = random.randint(101, 999)
 
@@ -39,15 +38,13 @@ def main_jeu():
 
     # Tirage au sort des 6 plaques différentes (d'ou random.sample) parmi les 24
     choice = random.sample(nb_to_choice, 6)
-    #Si on veut un random parmi les indices
-    # indices = random.sample(range(len(nb_to_choice)), 6)
-    print("Choix")
-    for indice, valeur in enumerate(choice):
-        print(f"[{indice}] = {valeur}")
 
     # TODO Tant que conditions de fin de sortie non atteintes: Faire
+    end_of_game = False
+    #while not end_of_game:
     print(f" Le nombre à obtenir est : {nb_to_get}")
-    # TODO Appel de la fonction affichage des plaques (fonction à écrire)
+
+    # Appel de la fonction affichage des plaques
     print_plaques(choice)
 
     # TODO Saisie de l'utilisateur choix d'une opération (fonctions à écrire)
