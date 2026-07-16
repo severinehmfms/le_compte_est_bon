@@ -61,7 +61,7 @@ def get_int_input(prompt, min_int, max_int):
     input_int = input(prompt)
     while not is_entry_int_ok(input_int, min_int, max_int):
         input_int = input("Saisie incorrecte. Merci de recommencer : ")
-    return input_int
+    return int(input_int)
 
 
 def is_card_choice_entry_ok(card_choice_input, min_int, max_int, choice):
@@ -112,7 +112,6 @@ def main_jeu():
 
     # Saisie de l'utilisateur choix d'une opération
     operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
-    operator_choice = int(operator_choice)
     #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
     card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
     card_choice_1 = int(card_choice_1)
