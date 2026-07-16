@@ -111,27 +111,29 @@ def main_jeu():
 
     # TODO Tant que conditions de fin de sortie non atteintes: Faire
     end_of_game = False
-    #while not end_of_game:
-    print(f" Le nombre à obtenir est : {nb_to_get}")
 
-    # Appel de la fonction affichage des plaques
-    print_plaques(choice)
+    while not end_of_game:
+        print(f" Le nombre à obtenir est : {nb_to_get}")
+        # Affichage des plaques
+        print_plaques(choice)
 
-    # Saisie de l'utilisateur choix d'une opération
-    operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
-    #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
-    card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
-    remove_plaque(choice, card_choice_1)
-    print_plaques(choice)
-    card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
-    remove_plaque(choice, card_choice_2)
-    print_plaques(choice)
+        # Saisie de l'utilisateur choix d'une opération
+        operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
+        #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
+        card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+        remove_plaque(choice, card_choice_1)
+        #print_plaques(choice)
+        card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+        remove_plaque(choice, card_choice_2)
+        #print_plaques(choice)
 
-    #Calcul demandé par l'utilisateur
+        #Calcul demandé par l'utilisateur
+        result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
+        add_plaque(choice, result)
+        print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
 
-    result = CONSTS_OPERATORS[int(operator_choice)](card_choice_1, card_choice_2)
-    add_plaque(choice, result)
-    print(f" Le résultat pour le calcul : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {result}")
+        if (len(choice) == 0):
+            end_of_game = True
 
     # TODO Si sortie de boucle, afficher le dernier nombre atteint
 
