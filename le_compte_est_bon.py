@@ -16,12 +16,19 @@ CONST_DIVISION = 4
 def print_plaques(choice):
     """Fonction qui affiche les plaques à disposition du joueur"""
     print("Plaques disponibles :")
-    print("+------+------+------+------+------+------+")
+    bordure = "+" + "------+" * len(choice)
+    print(bordure)
     print("|", end="")
     for nb in choice:
         print(f" {nb:^4} |", end="")
     print()
-    print("+------+------+------+------+------+------+")
+    print(bordure)
+
+
+def remove_plaque(choice, nb_plaque_to_remove):
+    """ Fonction qui supprime la plaque dont le nombre est : nb_plaque_to_remove"""
+    nb_plaque_to_remove = int(nb_plaque_to_remove)
+    choice.remove(nb_plaque_to_remove)
 
 
 def is_entry_int_ok(user_input, min_int, max_int):
@@ -93,7 +100,11 @@ def main_jeu():
 
     #Saisie de l'utilisateur pour le choix d'un nombres parmi les plaques
     card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+    remove_plaque(choice, card_choice_1)
+    print_plaques(choice)
     card_choice_2 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", 1, 100, choice)
+    remove_plaque(choice, card_choice_2)
+    print_plaques(choice)
 
     # TODO Calcul demandé par l'utilisateur
 
