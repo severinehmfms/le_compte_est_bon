@@ -31,6 +31,12 @@ def remove_plaque(choice, nb_plaque_to_remove):
     choice.remove(nb_plaque_to_remove)
 
 
+def add_plaque(choice, nb_plaque_to_add):
+    """ Fonction qui supprime la plaque dont le nombre est : nb_plaque_to_remove"""
+    nb_plaque_to_add = int(nb_plaque_to_add)
+    choice.append(nb_plaque_to_add)
+
+
 def is_entry_int_ok(user_input, min_int, max_int):
     """ Fonction qui vérifie la saisie d'un numérique, entre min_int et max_int    """
     cleaned_user_input = user_input.strip()
