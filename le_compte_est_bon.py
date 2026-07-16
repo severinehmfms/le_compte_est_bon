@@ -20,12 +20,12 @@ def print_plaques(choice):
     print("+------+------+------+------+------+------+")
 
 
-def is_entry_int_ok(saisie, min_int, max_int):
+def is_entry_int_ok(user_input, min_int, max_int):
     """ Fonction qui vérifie la saisie d'un numérique, entre min_int et max_int    """
-    cleaned_saisie = saisie.strip()
-    if not cleaned_saisie.isdigit():
+    cleaned_user_input = user_input.strip()
+    if not cleaned_user_input.isdigit():
         return False
-    if int(cleaned_saisie) < min_int or int(cleaned_saisie) > max_int:
+    if int(cleaned_user_input) < min_int or int(cleaned_user_input) > max_int:
         return False
     return True
 
