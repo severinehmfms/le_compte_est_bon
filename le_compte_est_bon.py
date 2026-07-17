@@ -49,7 +49,7 @@ def remove_plaque(choice, nb_plaque_to_remove):
 
 
 def add_plaque(choice, nb_plaque_to_add):
-    """ Fonction qui supprime la plaque dont le nombre est : nb_plaque_to_remove"""
+    """ Fonction qui ajoute la plaque dont le nombre est : nb_plaque_to_add"""
     nb_plaque_to_add = int(nb_plaque_to_add)
     choice.append(nb_plaque_to_add)
 
@@ -73,7 +73,7 @@ def get_int_input(prompt, min_int, max_int):
 
 
 def is_card_choice_entry_ok(card_choice_input, choice):
-    """ Fonction qui vérifie la saisie d'un numérique, entre min_int et max_int    """
+    """ Fonction qui vérifie la saisie d'un chiffre d'une plaque s'il est bien disponible """
     cleaned_card_choice_input = card_choice_input.strip()
     if not cleaned_card_choice_input.isdigit():
         return False
