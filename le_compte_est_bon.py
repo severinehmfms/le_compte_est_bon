@@ -4,12 +4,12 @@
 import random
 import operator
 
-
 """
 Le compte est bon
 Séverine Hori Maitrehut
 
 """
+CONST_SAISIE_INCORRECTE = "Saisie incorrecte. Merci de recommencer : "
 CONST_ADDITION = 1
 CONST_SUBSTRACTION = 2
 CONST_MULTIPLICATION = 3
@@ -23,11 +23,11 @@ CONSTS_OPERATORS = {
 }
 
 CONST_SYMBOLS = {
-        CONST_ADDITION: "+",
-        CONST_SUBSTRACTION: "-",
-        CONST_MULTIPLICATION: "*",
-        CONST_DIVISION: "/"
-    }
+    CONST_ADDITION: "+",
+    CONST_SUBSTRACTION: "-",
+    CONST_MULTIPLICATION: "*",
+    CONST_DIVISION: "/"
+}
 
 
 def print_plaques(choice):
@@ -68,7 +68,7 @@ def get_int_input(prompt, min_int, max_int):
     """Fonction qui demande au joueur de saisir un int"""
     input_int = input(prompt)
     while not is_entry_int_ok(input_int, min_int, max_int):
-        input_int = input("Saisie incorrecte. Merci de recommencer : ")
+        input_int = input(CONST_SAISIE_INCORRECTE)
     return int(input_int)
 
 
@@ -86,7 +86,7 @@ def get_card_choice_input(prompt, choice):
     """Fonction qui demande au joueur de saisir le nombre correspondant à la plaque choisie"""
     card_choice_input = input(prompt)
     while not is_card_choice_entry_ok(card_choice_input, choice):
-        card_choice_input = input("Saisie incorrecte. Merci de recommencer : ")
+        card_choice_input = input(CONST_SAISIE_INCORRECTE)
     return int(card_choice_input)
 
 
@@ -107,18 +107,22 @@ def get_str_entry_user(prompt):
     """Fonction qui demande au joueur d'appuyer sur la touche Entrée pour continuer, ou Q pour arrêter la partie"""
     input_str = input(prompt)
     while not is_entry_user_ok(input_str):
-        input_str = input("Saisie incorrecte. Merci de recommencer : ")
+        input_str = input(CONST_SAISIE_INCORRECTE)
     return input_str
 
 
 def main_jeu():
     """Fonction principale du jeu le compte est bon"""
     print("****************************** Le compte est bon *************************************")
+    result = 0
+    operator_choice = 0
+    card_choice_1 = 0
+    card_choice_2 = 0
+
     # Tirage au sort du nombre à obtenir
     nb_to_get = random.randint(101, 999)
-    result = 0
 
-    # On prépare les 24 plaques portant un nombre
+    # On prépare les 24 plaques portant un nombre parmi lesquelles on tirera au sort
     nb_to_choice = []
     for i in range(1, 10):
         nb_to_choice.append(i)
@@ -128,21 +132,27 @@ def main_jeu():
     nb_to_choice.append(75)
     nb_to_choice.append(100)
 
-    # Tirage au sort des 6 plaques différentes (d'ou random.sample) parmi les 24
+    # Tirage au sort des 6 plaques différentes parmi les 24
     choice = random.sample(nb_to_choice, 6)
 
+    str_nb_to_get = f"********* Le nombre à obtenir est : {nb_to_get}"
+    print(str_nb_to_get)
     # Affichage des plaques
     print_plaques(choice)
 
     end_of_game = False
     while not end_of_game:
-        print(f"********* Le nombre à obtenir est : {nb_to_get}")
         all_ok = False
 
         # Tant qu'il n'y a pas d'erreur dans le calcul
         while not all_ok:
             # Saisie de l'utilisateur choix d'une opération
-            operator_choice = get_int_input("Choix d'une opération (1 +, 2 -, 3 * et 4 /) : ", 1, 4)
+            prompt_operator_choice = "Opérations : \n "
+            prompt_operator_choice += "+--------+--------+--------+--------+\n"
+            prompt_operator_choice += "| + (1)  | - (2)  | * (3)  | / (4)  |\n"
+            prompt_operator_choice += "+--------+--------+--------+--------+\n"
+            prompt_operator_choice += "Saisissez le chiffre correspondant à l'opération choisie : \n"
+            operator_choice = get_int_input(prompt_operator_choice, 1, 4)
 
             # Saisie de l'utilisateur du premier chiffre parmi les plaques proposées
             card_choice_1 = get_card_choice_input("Choix d'un chiffre d'une des plaques : ", choice)
@@ -159,7 +169,7 @@ def main_jeu():
                 add_plaque(choice, card_choice_2)
                 continue
 
-            if operator_choice==CONST_DIVISION and card_choice_1 % card_choice_2 != 0:
+            if operator_choice == CONST_DIVISION and card_choice_1 % card_choice_2 != 0:
                 print("La division doit avoir pour résultat un entier.")
                 add_plaque(choice, card_choice_1)
                 add_plaque(choice, card_choice_2)
@@ -172,11 +182,13 @@ def main_jeu():
 
         # On ajoute le résultat du calcul à la liste des plaques disponibles
         add_plaque(choice, result)
-        print(f"Le résultat de votre calcul est : {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} est : {int(result)}")
+        print(f"Calcul {card_choice_1} {CONST_SYMBOLS[int(operator_choice)]} {card_choice_2} = {int(result)}")
 
+        print(str_nb_to_get)
         # Affichage des plaques
         print_plaques(choice)
 
+        # S'il ne reste plus qu'une plaque la partie est finie
         if len(choice) == 1:
             end_of_game = True
             exit()
@@ -184,10 +196,13 @@ def main_jeu():
         user_choice = get_str_entry_user("Pour continuer touche Entrée, pour quitter tapez Q : ")
         if user_choice == "Q":
             end_of_game = True
-            result = get_card_choice_input("Entrez le chiffre le plus proche atteint : ", choice)
+            result = get_card_choice_input("Entrez le chiffre le plus proche atteint parmi les plaques : ", choice)
 
     # Si sortie de boucle, afficher le dernier nombre atteint
-    print(f"Vous avez atteint le nombre {result}, il fallait atteindre le nombre {nb_to_get}")
+    end_party_str = f"Partie terminée. Nombre atteint : {result}, nombre attendu : {nb_to_get}"
+    if result == nb_to_get:
+        end_party_str += "BRAVO ! Vous avez obtenu le bon numéro !"
+    print(end_party_str)
 
 
 if __name__ == '__main__':
